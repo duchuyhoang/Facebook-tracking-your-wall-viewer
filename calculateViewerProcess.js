@@ -19,6 +19,7 @@ process.stdin.on("data", (chunk) => {
     1;
   let newString = chunk.slice(index1);
   let result = [];
+  let count = 0;
   try {
     while (newString.indexOf('{"status"') !== -1) {
       let start = newString.indexOf('{"status"');
@@ -28,7 +29,8 @@ process.stdin.on("data", (chunk) => {
       );
       result.push(info);
       newString = spliceSlice(newString, start, end + 1, "");
-      //   console.log(newString.slice(0, 300), start, end);
+      if (count < 300) count++;
+      else break;
     }
     return console.log(JSON.stringify(result));
   } catch (e) {
