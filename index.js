@@ -19,6 +19,7 @@ app.use(
 app.post("/input", upload.none(), (req, res) => {
   //   const readStream = fs.createReadStream(path.resolve(__dirname, "file.txt"));
   let bufferList = [];
+  console.log(req.body.value)
   if (!req.body.value) {
     res.render("list", {
       data: [],
