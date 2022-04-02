@@ -36,7 +36,7 @@ app.post("/input", upload.none(), (req, res) => {
   //   });
 
   child_process.stdout.on("data", (data) => {
-	  console.log(data);
+	  console.log(data.toString());
     // res.json({ data: JSON.parse(data.toString()) });
     res.render("list", {
       data: JSON.parse(data.toString()),
