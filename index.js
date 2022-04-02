@@ -17,7 +17,7 @@ app.use(
   })
 );
 app.post("/input", upload.none(), (req, res) => {
-  const readStream = fs.createReadStream(path.resolve(__dirname, "file.txt"));
+  //   const readStream = fs.createReadStream(path.resolve(__dirname, "file.txt"));
   let bufferList = [];
   if (!req.body.value) {
     res.render("list", {
@@ -26,13 +26,13 @@ app.post("/input", upload.none(), (req, res) => {
     return;
   }
   const child_process = spawn("node", ["calculateViewerProcess.js"]);
-  readStream.on("data", (data) => {
-    bufferList.push(data);
-  });
+  //   readStream.on("data", (data) => {
+  //     bufferList.push(data);
+  //   });
 
-  readStream.on("end", () => {
-    child_process.stdin.write(req.body.value);
-  });
+  //   readStream.on("end", () => {
+  child_process.stdin.end(req.body.value);
+  //   });
 
   child_process.stdout.on("data", (data) => {
     // res.json({ data: JSON.parse(data.toString()) });
