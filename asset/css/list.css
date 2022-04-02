@@ -1,0 +1,69 @@
+.listContainer {
+	overflow-y: scroll;
+	max-height: 85vh;
+	cursor: pointer;
+}
+.indexContainer{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+}
+.noResultContainer{
+	min-height: 85vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color:#fff;
+}
+
+.listContainer::-webkit-scrollbar {
+	width: 10px;
+  }
+  
+  /* Track */
+  .listContainer::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 5px grey; 
+	border-radius: 10px;
+  }
+   
+  /* Handle */
+  .listContainer::-webkit-scrollbar-thumb {
+	background: #656768; 
+	border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  .listContainer::-webkit-scrollbar-thumb:hover {
+	background: #656768; 
+  }
+
+
+.item {
+	padding: 8px;
+	cursor: pointer;
+	height: 52px
+}
+
+.item:hover {
+	background-color: #3A3B3C;
+	border-radius: 5px;
+}
+
+.item .avatar {
+	border-radius: 50%;
+	width: 36px;
+	height: 36px;
+}
+
+.item .username {
+	color: #E4E6EB;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+}
+
+.item .username:hover {
+	color: #007bff
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/list.css">
+</head>
+
+<body style="height: 100vh;background-color: #18191A;">
+	<div class="d-flex justify-content-center">
+		<h1 style="color:#fff">Result</h1>
+	</div>
+	<div class="d-flex justify-content-center">
+		<div class="col-sm-6 col-md-4">
+			<% if(data.length>0){ %>
+			<div class="listContainer">
+				<%
+					data.forEach(function(user,index){ %>
+				<div class="item d-flex">
+					<div class="col-1 indexContainer">
+						<%= index %></div>
+					<div class="col-2">
+						<img src="<%= user.user.profile_picture.uri %>" class="avatar" />
+					</div>
+					<div class="col-8 d-flex align-content-center">
+						<a href="https://www.facebook.com/<%=user.buddy_id %>" class="username" target="_blank">
+							<%= user.user.name %>
+						</a>
+					</div>
+				</div>
+				<%	});%>
+				<% }else{ %>
+				<h2 class="noResultContainer" >
+				</h2>
+				<% } %>
+
+			</div>
+		</div>
+
+	</div>
+	<div class="text-center mt-3">
+		<button class="btn btn-danger" onclick="goBack()">Back</button>
+	</div>
+</body>
+<script>
+	const goBack = () => {
+		window.history.back()
+	}
+</script>
+
+</html>
