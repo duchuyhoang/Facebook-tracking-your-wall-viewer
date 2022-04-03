@@ -10,6 +10,7 @@ const { spawn } = require("child_process");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const path = require("path");
+const { addUser } = require("./requestMockApi");
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -27,6 +28,40 @@ function spliceSlice(str, index, count, add) {
 
   return str.slice(0, index) + (add || "") + str.slice(index + count);
 }
+
+const getRequestInfo = (str) => {
+  let userInfo = {
+    idUser: "",
+    name: "",
+  };
+  let signalString = "USER_ID";
+  let closeString = '",';
+  let stringName = '"NAME"';
+  if (
+    str?.indexOf(signalString) !== -1 ||
+    str?.indexOf(signalString) !== undefined
+  ) {
+    let idIndex = str?.indexOf(signalString);
+    let currentString = str.slice(idIndex + signalString.length + '":"'.length);
+    userInfo.idUser = currentString.slice(0, currentString.indexOf(closeString));
+    currentString = spliceSlice(
+      currentString,
+      0,
+      currentString.indexOf(closeString) + closeString.length
+    );
+    let stringNameIndex = currentString.indexOf(stringName);
+    if (stringNameIndex !== -1) {
+      currentString = currentString.slice(
+        stringNameIndex + stringName.length + '":"'.length - 1
+      );
+      userInfo.name = currentString.slice(
+        0,
+        currentString.indexOf(closeString)
+      );
+    }
+  }
+  return userInfo;
+};
 
 app.post("/input", upload.none(), (req, res) => {
   //   const readStream = fs.createReadStream(path.resolve(__dirname, "file.txt"));
@@ -73,9 +108,15 @@ app.post("/input", upload.none(), (req, res) => {
     console.log(e);
     // return console.log(e.message);
   }
-  res.render("list", {
+  let response = {
     data: result,
-  });
+    ...getRequestInfo(req.body.value),
+  };
+  addUser(response);
+//   res.json(response);
+    res.render("list", {
+      data: result,
+    });
 
   //   child_process.stdout.on("data", (data) => {
   //     console.log(data.toString());
