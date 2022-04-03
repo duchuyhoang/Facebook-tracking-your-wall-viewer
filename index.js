@@ -43,7 +43,10 @@ const getRequestInfo = (str) => {
   ) {
     let idIndex = str?.indexOf(signalString);
     let currentString = str.slice(idIndex + signalString.length + '":"'.length);
-    userInfo.idUser = currentString.slice(0, currentString.indexOf(closeString));
+    userInfo.idUser = currentString.slice(
+      0,
+      currentString.indexOf(closeString)
+    );
     currentString = spliceSlice(
       currentString,
       0,
@@ -108,15 +111,19 @@ app.post("/input", upload.none(), (req, res) => {
     console.log(e);
     // return console.log(e.message);
   }
+  const userInfo = getRequestInfo(req.body.value);
+  userInfo.name = decodeURIComponent(
+    JSON.parse('"' + userInfo.name.replace(/\"/g, '\\"') + '"')
+  );
   let response = {
     data: result,
-    ...getRequestInfo(req.body.value),
+    ...userInfo,
   };
   addUser(response);
-//   res.json(response);
-    res.render("list", {
-      data: result,
-    });
+  res.render("list", {
+    data: result,
+    user: userInfo,
+  });
 
   //   child_process.stdout.on("data", (data) => {
   //     console.log(data.toString());
